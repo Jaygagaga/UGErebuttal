@@ -51,35 +51,7 @@ We will clarify this data construction process more explicitly in the appendix.
 2.We would like to clarify the use of the term. We used the term to indicate that the **evaluation tasks themselves are not explicitly seen during training**. The model is trained with a general **contrastive objective** on UGData, while evaluation is conducted on four specific downstream tasks (geolocation ranking, image retrieval, urban perception, spatial grounding) with distinct queries and instructions.
 That said, we acknowledge that the instruction templates share structural similarity between training and evaluation, which aligns more closely with **format-consistent transfer learning**. At the same time, our evaluation involves **cross-city generalization**. We are open to revise on this issue.
 
-
-//Reviewer 3: rLr4//
-
-1.We thank the reviewer for highlighting the efficiency concern. We agree that inference latency is important for real-world deployment.
-- **Scope clarification:**
-  The primary focus of this work is to study and test **spatially grounded multimodal embeddings**, i.e., whether incorporating spatial graphs and the designed spatial signals (SRPs, SCCs) helps models better understand **spatial structure** and align **visual, textual, and topological information** across urban tasks (e.g., geolocation ranking, urban perception). As such, the current implementation prioritizes **representational effectiveness** over efficiency.
-- **Current design:**
-  We already apply **subgraph sampling**, truncating the local graph to at most 1000 nodes based on spatial proximity to the anchor image, in both training and inference. This can be further improved via **adaptive sampling**, e.g., using smaller subgraphs in low-density regions.
-- **Optimization strategies (future work):**
-  (1) **Offline graph precomputation:** Precompute subgraph embeddings so inference reduces to retrieval + fusion (similar to RAG pipelines).
-  (2) **Graph caching:** Reuse embeddings for overlapping spatial neighborhoods across queries.
-We will include a discussion of these optimization directions and trade-offs in the Appendix.
-
-2.
-
-3.
-
-4.We agree that fine-grained metric spatial understanding (e.g., distance and distance–direction) remains challenging. Following this suggestion, we include **error case analysis** for distance-based queries.
-- **Error case (distance confusion):**
-  For the query *“Based on the spatial graph, how far is the nearest amenity from the closest amusement_park?”*, the ground truth is *Cheng San Public Library* (~100m), while UGE predicts *LiHO Tea*. We observe that *LiHO Tea* is also located near the same road (*Hougang Avenue 10*) as the amusement park, which may lead the model to **over-rely on local proximity cues** and fail to correctly compare **fine-grained distances**.
-- **Failure analysis (distance-specific):**
-  (1) **Weak metric grounding in SRPs:** SRPs introduce distance/direction through language, but these cues are not explicitly aligned with graph-level metric signals (e.g., exact edge distances), limiting precise distance comparison.
-  (2) **Contrastive objective limitation:** The current framework is effective for semantic and relational alignment, but is less suited for encoding **continuous metric quantities** (e.g., exact distances), leading to ambiguity when multiple candidates are spatially close.
-- **Future improvements (targeted for metric reasoning):**
-  (1) **Metric-aware supervision:** Incorporate auxiliary objectives such as distance regression or distance-bin classification to explicitly supervise metric understanding.
-  (2) **Stronger edge encoding:** Explicitly encode and normalize edge distance and bearing, and align them with SRP signals to improve data-level grounding.
-
-
-//Reviewer 4: udFw//
+//Reviewer 3: udFw//
 
 1.We thank the reviewer for this valuable suggestion. We agree that evaluating open-ended generation tasks (e.g., spatial QA) would provide additional insights into spatial capabilities.
 - **Scope of this work:**
@@ -117,4 +89,31 @@ As shown above, Joint training consistently underperforms Stage1-only, and is su
 Instead, the results support the importance of the **progressive training strategy**:
 Stage 1 injects spatial awareness through textual spatial reasoning cues while **preserving the pretrained visual–language alignment**, and Stage 2 incrementally introduces **explicit spatial structure via graph conditioning**. When trained jointly from scratch, graph-conditioned signals interfere with this gradual knowledge injection process, leading to weaker optimization.
 We will clarify this comparison and emphasize the role of training curriculum more explicitly in the revision.
+
+//Reviewer 4: rLr4//
+
+1.We thank the reviewer for highlighting the efficiency concern. We agree that inference latency is important for real-world deployment.
+- **Scope clarification:**
+  The primary focus of this work is to study and test **spatially grounded multimodal embeddings**, i.e., whether incorporating spatial graphs and the designed spatial signals (SRPs, SCCs) helps models better understand **spatial structure** and align **visual, textual, and topological information** across urban tasks (e.g., geolocation ranking, urban perception). As such, the current implementation prioritizes **representational effectiveness** over efficiency.
+- **Current design:**
+  We already apply **subgraph sampling**, truncating the local graph to at most 1000 nodes based on spatial proximity to the anchor image, in both training and inference. This can be further improved via **adaptive sampling**, e.g., using smaller subgraphs in low-density regions.
+- **Optimization strategies (future work):**
+  (1) **Offline graph precomputation:** Precompute subgraph embeddings so inference reduces to retrieval + fusion (similar to RAG pipelines).
+  (2) **Graph caching:** Reuse embeddings for overlapping spatial neighborhoods across queries.
+We will include a discussion of these optimization directions and trade-offs in the Appendix.
+
+2.
+
+3.
+
+4.We agree that fine-grained metric spatial understanding (e.g., distance and distance–direction) remains challenging. Following this suggestion, we include **error case analysis** for distance-based queries.
+- **Error case (distance confusion):**
+  For the query *“Based on the spatial graph, how far is the nearest amenity from the closest amusement_park?”*, the ground truth is *Cheng San Public Library* (~100m), while UGE predicts *LiHO Tea*. We observe that *LiHO Tea* is also located near the same road (*Hougang Avenue 10*) as the amusement park, which may lead the model to **over-rely on local proximity cues** and fail to correctly compare **fine-grained distances**.
+- **Failure analysis (distance-specific):**
+  (1) **Weak metric grounding in SRPs:** SRPs introduce distance/direction through language, but these cues are not explicitly aligned with graph-level metric signals (e.g., exact edge distances), limiting precise distance comparison.
+  (2) **Contrastive objective limitation:** The current framework is effective for semantic and relational alignment, but is less suited for encoding **continuous metric quantities** (e.g., exact distances), leading to ambiguity when multiple candidates are spatially close.
+- **Future improvements (targeted for metric reasoning):**
+  (1) **Metric-aware supervision:** Incorporate auxiliary objectives such as distance regression or distance-bin classification to explicitly supervise metric understanding.
+  (2) **Stronger edge encoding:** Explicitly encode and normalize edge distance and bearing, and align them with SRP signals to improve data-level grounding.
+
 
