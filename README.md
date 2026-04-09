@@ -65,8 +65,7 @@ We will include a discussion of these optimization directions and trade-offs in 
 
 2. **Limited statistical robustness analysis**.  We thank the reviewer for this suggestion. Due to time constraints, we conduct multi-seed analysis on **UGE (Qwen2.5-VL-7B)** using **five training seeds** (42, 123, 3407, 2025, 7), evaluated on the **Singapore geolocation task**.
 
-Across 5 seeds, UGE achieves:
-- **Hit@5: 0.6314 ± 0.0210**
+Across 5 seeds, UGE achieves: **Hit@5: 0.6314 ± 0.0210**
 
 **Per-seed results:**
 
