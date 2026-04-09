@@ -27,6 +27,7 @@ In particular, our benchmark differs by (1) introducing spatial graphs as an inp
 - **Mitigation of name/text overlap:**
   While entity names (e.g., common street or POI names) may naturally recur in urban environments—for example, similar street names such as *“Nan Xiaojie”* and *“Bei Xiaojie”* in areas like Dongzhimen or Xizhimen in Beijing—the **specific spatial configurations, local subgraphs, and SRP/SCC descriptions** associated with each anchor location are distinct across splits. This mitigates near-duplicate or template-level leakage.
 We will clarify this data construction process more explicitly in the appendix.
+
 5.We thank the reviewer for this suggestion. To better contextualize geolocation ranking, we additionally evaluate on the IM2GPS3K benchmark (used by PIGEON/Geo-R) by converting coordinate predictions into our ranking setting.
 - **Protocol:**
   We convert GPS coordinates into textual labels via reverse geocoding (Mapbox), and construct 20-candidate sets per query. This allows evaluation using both:
@@ -88,6 +89,7 @@ We will include a discussion of these optimization directions and trade-offs in 
   (1) retrieve relevant urban locations or neighborhoods using UGE embeddings, and
   (2) condition a generative model to produce **spatial QA or navigation instructions** grounded in retrieved evidence.
 This setup can enhance **spatial faithfulness** and support real-world applications (e.g., travel assistance).
+
 2.We thank the reviewer for highlighting the efficiency concern. We agree that inference latency is important for real-world deployment.
 - **Scope clarification:**
   The primary focus of this work is to study and test **spatially grounded multimodal embeddings**, i.e., whether incorporating spatial graphs and the designed spatial signals (SRPs, SCCs) helps models better understand **spatial structure** and align **visual, textual, and topological information** across urban tasks (e.g., geolocation ranking, urban perception). As such, the current implementation prioritizes **representational effectiveness** over efficiency.
@@ -97,6 +99,7 @@ This setup can enhance **spatial faithfulness** and support real-world applicati
   (1) **Offline graph precomputation:** Precompute subgraph embeddings so inference reduces to retrieval + fusion (similar to RAG pipelines).
   (2) **Graph caching:** Reuse embeddings for overlapping spatial neighborhoods across queries.
 We will include a discussion of these optimization directions and trade-offs in the Appendix.
+
 3.We thank the reviewer for this important suggestion. Following this comment, we added a **joint training baseline (“Joint”)**, where Stage 1 (SRP/SCC) and Stage 2 (graph-conditioned) data are naively combined and trained simultaneously.
 **Ablation results (H@5 / N@5):**
 | Task                | Method        | NY | SG | BJ | PA |
