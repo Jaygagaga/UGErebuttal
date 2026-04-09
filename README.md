@@ -63,7 +63,7 @@ That said, we acknowledge that the instruction templates share structural simila
   (2) **Graph caching:** Reuse embeddings for overlapping spatial neighborhoods across queries.
 We will include a discussion of these optimization directions and trade-offs in the Appendix.
 
-2. **Limited statistical robustness analysis**.  We thank the reviewer for this suggestion. Due to time constraints, we conduct multi-seed analysis on **UGE (Qwen2.5-VL-7B)** using **five training seeds** (42, 123, 3407, 2025, 7), evaluated on the **Singapore geolocation task**.
+2. **Limited statistical robustness analysis**.  We thank the reviewer for this suggestion. Due to time constraints, we conduct multi-seed analysis on **UGE (Qwen2.5-VL-7B)** by fine-tuning **Stage 2 from Stage 1 checkpoints** using **five training seeds** (42, 123, 3407, 2025, 7), evaluated on the **Singapore geolocation task**.
 
 Across 5 seeds, UGE achieves: **Hit@5: 0.6314 ± 0.0210**
 
