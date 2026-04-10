@@ -59,6 +59,7 @@ Across 5 seeds, UGE achieves: **Hit@5: 0.6333 ± 0.0142**
 | 3407 | 62.10 |
 | 2025 | 61.60 |
 | 7    | 65.50 |
+
 These results indicate **stable performance across random initializations**.
 
 **3. Small test sets.**  Our benchmark covers **4 core tasks**, with two tasks expanded into **6 and 4 subtasks across 4 cities**, emphasizing **diversity and structured evaluation**. The test sets are **carefully curated** to ensure high quality and include **challenging samples**, rather than simply increasing scale. We observe similar patterns in prior work. For example, **CityEval** contains 100–300 samples per task per city, reflecting a similar trade-off between task diversity and per-task scale.
