@@ -46,16 +46,11 @@ We use *zero-shot* to indicate that **evaluation tasks are not explicitly seen d
 
 //Reviewer 3: rLr4//
 
-1.**Efficiency concern.** 
-We agree that inference latency is important.However, we stress that the scope of the work is to validate if **urban spatial graphs can enhance multi-modal embeddings**. Accordingly, the proposed UGE model is designed with a focus on **representation quality** (alignment of visual, textual, and graph modalities), rather than being optimized for **real-time deployment**.
-That being said, if needed, we can apply more **aggressive or adaptive subgraph sampling**, employ **offline graph precomputation** with only retrieval + fusion at inference, and **graph caching** for overlapping neighbourhoods. We will discuss these optimizations and trade-offs in the Appendix.
+1.**Efficiency concern.** We agree that inference latency is important.However, we stress that the scope of the work is to validate if **urban spatial graphs can enhance multi-modal embeddings**. Accordingly, the proposed UGE model is designed with a focus on **representation quality** (alignment of visual, textual, and graph modalities), rather than being optimized for **real-time deployment**. That being said, if needed, we can apply more **aggressive or adaptive subgraph sampling**, employ **offline graph precomputation** with only retrieval + fusion at inference, and **graph caching** for overlapping neighbourhoods. We will discuss these optimizations and trade-offs in the Appendix.
 
-**2. Limited statistical robustness analysis.** 
-Due to time constraints, we conduct multi-seed runs on **UGE (Qwen2.5-VL-7B)** by fine-tuning **Stage 2 from Stage 1 checkpoints** using **five training seeds** (42, 123, 3407, 2025, 7), evaluated on the **Singapore geolocation task**.
+**2. Limited statistical robustness analysis.** Due to time constraints, we conduct multi-seed runs on **UGE (Qwen2.5-VL-7B)** by fine-tuning **Stage 2 from Stage 1 checkpoints** using **five training seeds** (42, 123, 3407, 2025, 7), evaluated on the **Singapore geolocation task**.
 Across 5 seeds, UGE achieves: **Hit@5: 0.6333 ± 0.0142**
-
 **Per-seed results:**
-
 | Seed | Hit@5 |
 |------|------|
 | 42   | 64.23(reported in paper) |
@@ -63,15 +58,11 @@ Across 5 seeds, UGE achieves: **Hit@5: 0.6333 ± 0.0142**
 | 3407 | 62.10 |
 | 2025 | 61.60 |
 | 7    | 65.50 |
+These results indicate **stable performance across random initializations**.
 
-These results indicate **stable performance across random initializations**, with relatively low variance compared to the overall gains.
+**3. Small test sets.**  Our benchmark covers **4 core tasks**, with two tasks expanded into **6 and 4 subtasks across 4 cities**, emphasizing **diversity and structured evaluation**. The test sets are **carefully curated** to ensure high quality and include **challenging samples**, rather than simply increasing scale. We observe similar patterns in prior work. For example, **CityEval** contains 100–300 samples per task per city, reflecting a similar trade-off between task diversity and per-task scale.
 
-**3. Small test sets.**  
-Our benchmark covers **4 core tasks**, with perception and grounding expanded into **6 and 4 subtasks across 4 cities**, emphasizing **diversity and structured evaluation**. The test sets are **carefully curated** to ensure high quality and include **challenging samples**, rather than simply increasing scale. We observe similar patterns in prior work. For example, **CityEval (CityGPT)** contains  100–300 samples per task per city, reflecting a similar trade-off between task diversity and per-task scale.
-
-**4. Error case.**  
-We include **error analysis** for distance-based queries.
-- **Example:**  For a distance query, the model predicts a POI near the same road as the reference location, while the ground truth is slightly closer. This suggests reliance on **local proximity cues**, making **fine-grained distance comparison** difficult.
+**4. Error case.**  For a distance query, the model predicts a POI near the same road as the reference location, while the ground truth is slightly closer. This suggests reliance on **proximity cues**, making **fine-grained distance comparison** difficult.
 - **Analysis:**  
   (1) **Weak metric grounding:** SRPs express distance/direction in language but are not explicitly aligned with graph-level metrics.  
   (2) **Objective limitation:** Contrastive learning captures semantic relations but struggles with **continuous distance values**.
