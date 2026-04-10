@@ -38,7 +38,16 @@ We will clarify this process in the appendix.
 
 //Reviewer 2: q92V//
 
-**1.small candidate pool.**
+**1.small candidate pool.** We agree that for tasks such as geolocation and image retrieval, a 20-candidate setting is limited. Following reviewer's suggestion. We extend the **Singapore geolocation test** with larger candidate pools (100 and 150) and evaluate UGE (Qwen2.5-VL-7B).
+- **Results:**  
+  - **100 candidates:**  
+    UGE — Hit@5: **0.4338**, NDCG@5: **0.3122**  
+    Baseline — Hit@5: 0.2715, NDCG@5: 0.1997  
+  - **150 candidates:**  
+    UGE — Hit@5: **0.4008**, NDCG@5: **0.2807**  
+    Baseline — Hit@5: 0.2162, NDCG@5: 0.1548  
+- **Takeaway:**  
+  While performance decreases as candidate size increases (expected), **UGE consistently outperforms its backbone**, indicating that the gains persist in more realistic, larger search spaces.
 
 
 **2. Zero-shot vs. transfer learning.**  
