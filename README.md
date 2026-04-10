@@ -1,6 +1,8 @@
 //Reviewer 1: WHbG//
+
 We thank the reviewer for insightful suggestions.
-**1. Benchmark is insufficiently novel** .Our benchmark is, to the best of our knowledge, the **first to incorporate urban spatial graphs as a first-class input modality** for evaluating multimodal embedding models.  
+
+1.**Benchmark is insufficiently novel**. Our benchmark is, to the best of our knowledge, the **first to incorporate urban spatial graphs as a first-class input modality** for evaluating multimodal embedding models.  
 - This introduces a **new evaluation setting**, where models must jointly align **visual, textual, and structured spatial information**, making standard tasks **unexplored under graph-augmented inputs**.  
 - The goal is not new tasks, but to test whether embeddings can **capture structured urban spatial knowledge**, via:  
   - **(i) spatial graphs**, and  
@@ -15,7 +17,7 @@ This design enables **progressive injection of spatial knowledge** into the embe
 
 4. **CityLens**.CityLens focuses on urban socio-economic prediction from visual data, formulated as supervised learning over predefined indicators. In contrast, our work targets representation learning and evaluation, aiming to assess whether multimodal embeddings can align visual, textual, and spatial graph information. We will cite CityLens and clarify this distinction in the revision.
 
-**6. Data leakage.** We take several steps to avoid leakage between training (SRP/SCC) and evaluation:
+5. **Data leakage**. We take several steps to avoid leakage between training (SRP/SCC) and evaluation:
 - **Spatial separation:**  
   Anchor locations in train/test sets are **spatially separated**, so their local subgraphs (≤1000 nodes) have minimal or no overlap.
 - **Independent candidate pools:**  
@@ -24,7 +26,7 @@ This design enables **progressive injection of spatial knowledge** into the embe
   While entity names may recur, the **spatial configurations, subgraphs, and SRP/SCC descriptions** are distinct across splits, reducing near-duplicate leakage.
 We will clarify this process in the appendix.
 
-5. **Test UGE on coordinates-based geolocation test set**. We thank the reviewer for this suggestion. To better contextualize geolocation ranking, we additionally evaluate on the IM2GPS3K benchmark (used by PIGEON/Geo-R) by converting coordinate predictions into our ranking setting.
+6. **Test UGE on coordinates-based geolocation test set**. We thank the reviewer for this suggestion. To better contextualize geolocation ranking, we additionally evaluate on the IM2GPS3K benchmark (used by PIGEON/Geo-R) by converting coordinate predictions into our ranking setting.
 - **Protocol:**
   We convert GPS coordinates into textual labels via reverse geocoding (Mapbox), and construct 20-candidate sets per query. This allows evaluation using both:
   - ranking metrics (Hit@K, NDCG@K), and
@@ -44,8 +46,8 @@ We will clarify this process in the appendix.
 1. **small candidate pool**
 
 
-2. **Zero-shot VS transfer learning**. We would like to clarify the use of the term. We used the term to indicate that the **evaluation tasks themselves are not explicitly seen during training**. The model is trained with a general **contrastive objective** on UGData, while evaluation is conducted on four specific downstream tasks (geolocation ranking, image retrieval, urban perception, spatial grounding) with distinct queries and instructions.
-That said, we acknowledge that the instruction templates share structural similarity between training and evaluation, which aligns more closely with **format-consistent transfer learning**. At the same time, our evaluation involves **cross-city generalization**. We are open to revise on this issue.
+2. **Zero-shot vs. transfer learning.**  
+We use *zero-shot* to indicate that **evaluation tasks are not explicitly seen during training**, as the model is trained with a general **contrastive objective** and evaluated on distinct downstream tasks.  We acknowledge that shared instruction structures make this closer to **format-consistent transfer learning**, while still involving **cross-city generalization**. We will revise the terminology accordingly.
 
 //Reviewer 3: rLr4//
 
