@@ -10,7 +10,7 @@ We thank the reviewer for insightful suggestions.
 
 **2. Failure cases.** We note that the variance between different models/LLMs appear to be stochastic rather than systematic effects. we also undertake an error case analysis on **Nearest POI task** in Beijing. In one example, the model predicts a POI along a nearby main road, while the ground truth is slightly closer on a parallel small pedestrian path. Although both are spatially close, the model favors the POI with stronger road connectivity, suggesting reliance on **coarse structural proximity cues**, which makes **fine-grained distance distinctions** more challenging.
 
-**3. CityLens.** We will cite CityLens and clarify this distinction in the revision.
+**3. CityLens.** We will cite CityLens and clarify our distinctions in the revision.
 
 **4. Data leakage.** We did the followings to avoid data leakage:
 - **Spatial separation:**  Anchor locations in train/test sets are **spatially separated**, so their local subgraphs (≤1000 nodes) have minimal or no overlap.
