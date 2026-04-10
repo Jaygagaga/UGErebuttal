@@ -39,13 +39,13 @@ We will clarify this process in the appendix.
 //Reviewer 2: q92V//
 
 **1.small candidate pool.** We agree that for tasks such as geolocation and image retrieval, a 20-candidate setting is limited. Following reviewer's suggestion. We extend the **Singapore geolocation test** with larger candidate pools (100 and 150) and evaluate UGE (Qwen2.5-VL-7B).
-- **Results:**  
+- **Results:**
 | Candidates | Model     | Hit@5  | NDCG@5 |
 |------------|----------|--------|--------|
-| 100        | UGE      | 0.4338 | 0.3122 |
-|            | Baseline | 0.2715 | 0.1997 |
-| 150        | UGE      | 0.4008 | 0.2807 |
-|            | Baseline | 0.2162 | 0.1548 | 
+| 100        | UGE      | **43.38** | **31.22** |
+|            | Baseline | 27.15 | 19.97 |
+| 150        | UGE      | **40.08** | **28.07** |
+|            | Baseline | 21.62 | 15.48 | 
 - **Takeaway:**  
   While performance decreases as candidate size increases (expected), **UGE consistently outperforms its backbone**, indicating that the gains persist in more realistic, larger search spaces.
 
@@ -71,11 +71,11 @@ Across 5 seeds, UGE achieves: **Hit@5: 0.6314 ± 0.0210**
 
 | Seed | Hit@5 |
 |------|------|
-| 42   | 0.6030 |
-| 123  | 0.6320 |
-| 3407 | 0.6210 |
-| 2025 | 0.6460 |
-| 7    | 0.6550 |
+| 42   | 60.30 |
+| 123  | 63.20 |
+| 3407 | 62.10 |
+| 2025 | 64.60 |
+| 7    | 65.50 |
 
 These results indicate **stable performance across different random initializations**, with relatively low variance compared to the overall performance gains.
 
