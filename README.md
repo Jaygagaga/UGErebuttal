@@ -1,32 +1,28 @@
 //Reviewer 1: WHbG//
+We thank the reviewer for insightful suggestions.
+**1. Benchmark is insufficiently novel** .Our benchmark is, to the best of our knowledge, the **first to incorporate urban spatial graphs as a first-class input modality** for evaluating multimodal embedding models.  
+- This introduces a **new evaluation setting**, where models must jointly align **visual, textual, and structured spatial information**, making standard tasks **unexplored under graph-augmented inputs**.  
+- The goal is not new tasks, but to test whether embeddings can **capture structured urban spatial knowledge**, via:  
+  - **(i) spatial graphs**, and  
+  - **(ii) designed spatial signals (SRPs, SCCs)**.  
+- We also want to emphasize the **data-level contribution**:  
+  - **Stage 1 (SRPs/SCCs):** injects spatial awareness via language-aligned reasoning cues.  
+  - **Stage 2 (graph conditioning):** introduces explicit **topological and relational structure**.  
 
-1. **Benchmark is insufficiently novel**. We thank the reviewer for this suggestion. While the individual task formats are conceptually familiar, our benchmark is, to the best of our knowledge, the **first to incorporate urban spatial graphs as a first-class input modality** for evaluating multimodal embedding models.
-By treating spatial graphs as an additional modality, the benchmark introduces a **new evaluation setting** where models must jointly align **visual, textual, and structured spatial information**. In this context, even conventional tasks become **previously unexplored** for embedding models with spatial inputs.
+This design enables **progressive injection of spatial knowledge** into the embedding space.
 
-The primary aim of this work is to evaluate whether multimodal embeddings can **capture structured urban spatial knowledge**, specifically through:
-- (i) **urban spatial graphs**, and
-- (ii) **designed spatial signals in SRPs and SCCs**.
-Rather than proposing new task types, we **reframe standard tasks** to test whether embeddings can encode **relational and spatial structure beyond visual appearance**.
-We want to emphasize the **data-level contribution** of our work. Our two-stage dataset provides **complementary supervision signals**:
-- **Stage 1 (SRPs/SCCs):** injects spatial awareness via **language-aligned spatial reasoning paths and contextual descriptions**, grounding images within their surrounding urban context.
-- **Stage 2 (graph conditioning):** introduces **explicit spatial structure** through urban graphs, enabling the model to encode **topological and relational information**.
-This design allows spatial knowledge to be **progressively aligned and injected** into the embedding space.
+2. **No analysis for the failure cases**.We note that this behavior appears to be **model-specific variance**. Following the suggestion, we also undertake an error case analysis on Nearest POI task in Beijing.In one example, the model predicts a POI along a nearby main road, while the ground truth is slightly closer on a parallel pedestrian path. Although both are spatially close, the model favors the POI with stronger road connectivity, suggesting reliance on **coarse structural proximity cues**, which makes **fine-grained distance distinctions** more challenging.
 
-2. **No analysis for the failure cases**. We thank the reviewer for this insightful comment. We note that this behavior appears to be **model-specific variance**. 
-Following the suggestion, we also undertake an error case analysis on Nearest POI task in Beijing.
-In one representative example, the model predicts a POI A located along a nearby main road, while the ground-truth POI B lies slightly closer but along a parallel pedestrian-accessible path. Both candidates are spatially close and share similar local context, but the model favors the POI A more strongly connected to the dominant road structure. This suggests that the model may rely more on **coarse structural proximity cues (e.g., road connectivity)**, which can make **fine-grained distance distinctions between nearby candidates more challenging**.
+4. **CityLens**.CityLens focuses on urban socio-economic prediction from visual data, formulated as supervised learning over predefined indicators. In contrast, our work targets representation learning and evaluation, aiming to assess whether multimodal embeddings can align visual, textual, and spatial graph information. We will cite CityLens and clarify this distinction in the revision.
 
-3. **CityLens**. CityLens focuses on urban socio-economic prediction from visual data, formulated as supervised learning over predefined indicators. In contrast, our work targets representation learning and evaluation, aiming to assess whether multimodal embeddings can align visual, textual, and spatial graph information.
-In particular, our benchmark differs by (1) introducing spatial graphs as an input modality, and (2) formulating tasks as retrieval and ranking, rather than prediction. We will cite CityLens and clarify this distinction in the revision.
-
-4. **How the our work avoid leakage between training and evaluation**. We take several steps to avoid leakage between training (SRP/SCC) and evaluation:
-- **Spatially separated candidate construction:**
-  Candidate sets are constructed based on **spatial proximity to the anchor image**, with candidates sampled within a radius of 100–1000 meters. Importantly, anchor locations in the training and test sets are **spatially separated**, such that their corresponding local subgraphs (up to 1000 nodes) have minimal or no overlap. This reduces the risk of shared entities or graph structures.
-- **Test-set-only candidate supplementation:**
-  When the required number of candidates (e.g., 20) cannot be satisfied within the local neighborhood, additional candidates are sampled from **other instances within the test set**, ensuring that candidate pools remain independent of training data.
-- **Mitigation of name/text overlap:**
-  While entity names (e.g., common street or POI names) may naturally recur in urban environments—for example, similar street names such as *“Nan Xiaojie”* and *“Bei Xiaojie”* in areas like Dongzhimen or Xizhimen in Beijing—the **specific spatial configurations, local subgraphs, and SRP/SCC descriptions** associated with each anchor location are distinct across splits. This mitigates near-duplicate or template-level leakage.
-We will clarify this data construction process more explicitly in the appendix.
+**6. Data leakage.** We take several steps to avoid leakage between training (SRP/SCC) and evaluation:
+- **Spatial separation:**  
+  Anchor locations in train/test sets are **spatially separated**, so their local subgraphs (≤1000 nodes) have minimal or no overlap.
+- **Independent candidate pools:**  
+  When local candidates are insufficient, additional candidates are sampled **only from the test set**, ensuring no training data is used.
+- **Mitigating overlap:**  
+  While entity names may recur, the **spatial configurations, subgraphs, and SRP/SCC descriptions** are distinct across splits, reducing near-duplicate leakage.
+We will clarify this process in the appendix.
 
 5. **Test UGE on coordinates-based geolocation test set**. We thank the reviewer for this suggestion. To better contextualize geolocation ranking, we additionally evaluate on the IM2GPS3K benchmark (used by PIGEON/Geo-R) by converting coordinate predictions into our ranking setting.
 - **Protocol:**
@@ -79,9 +75,9 @@ Across 5 seeds, UGE achieves: **Hit@5: 0.6314 ± 0.0210**
 
 These results indicate **stable performance across different random initializations**, with relatively low variance compared to the overall performance gains.
 
-3. **small test sets**.
+3. **Small test sets**. Our benchmark is designed to cover **4 core urban task types**, with urban perception and spatial grounding further expanded into **6 and 4 subtasks across 4 cities**, enabling diverse yet structured evaluation. The test sets are constructed with **deliberate curation** to ensure high data quality and include a meaningful proportion of **challenging samples**, rather than simply scaling dataset size. We observe similar design choices in other urban benchmarks. For example, CityEval (CityGPT) contains ~6,000 samples across 41 tasks, corresponding to roughly **100–200 instances per task**, reflecting a similar balance between task diversity and per-task scale.
 
-4.We agree that fine-grained metric spatial understanding (e.g., distance and distance–direction) remains challenging. Following this suggestion, we include **error case analysis** for distance-based queries.
+4. **Error case**. We agree that fine-grained metric spatial understanding (e.g., distance and distance–direction) remains challenging. Following this suggestion, we include **error case analysis** for distance-based queries.
 - **Error case (distance confusion):**
   For the query *“Based on the spatial graph, how far is the nearest amenity from the closest amusement_park?”*, the ground truth is *Cheng San Public Library* (~100m), while UGE predicts *LiHO Tea*. We observe that *LiHO Tea* is also located near the same road (*Hougang Avenue 10*) as the amusement park, which may lead the model to **over-rely on local proximity cues** and fail to correctly compare **fine-grained distances**.
 - **Failure analysis (distance-specific):**
