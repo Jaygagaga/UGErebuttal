@@ -15,15 +15,12 @@ This design enables **progressive injection of spatial knowledge** into the embe
 
 **2. No analysis for the failure cases.** We note that this behavior appears to be **model-specific variance**. Following the suggestion, we also undertake an error case analysis on Nearest POI task in Beijing.In one example, the model predicts a POI along a nearby main road, while the ground truth is slightly closer on a parallel pedestrian path. Although both are spatially close, the model favors the POI with stronger road connectivity, suggesting reliance on **coarse structural proximity cues**, which makes **fine-grained distance distinctions** more challenging.
 
-**3. CityLens.** CityLens focuses on urban socio-economic prediction from visual data, formulated as supervised learning over predefined indicators. In contrast, our work targets representation learning and evaluation, aiming to assess whether multimodal embeddings can align visual, textual, and spatial graph information. We will cite CityLens and clarify this distinction in the revision.
+**3. CityLens.** CityLens focuses on urban socio-economic prediction from visual data, while our work targets **representation learning and evaluation** for aligning visual, textual, and spatial graph information. We will cite CityLens and clarify this distinction in the revision.
 
 **4. Data leakage.** We take several steps to avoid leakage between training (SRP/SCC) and evaluation:
-- **Spatial separation:**  
-  Anchor locations in train/test sets are **spatially separated**, so their local subgraphs (≤1000 nodes) have minimal or no overlap.
-- **Independent candidate pools:**  
-  When local candidates are insufficient, additional candidates are sampled **only from the test set**, ensuring no training data is used.
-- **Mitigating overlap:**  
-  While entity names may recur, the **spatial configurations, subgraphs, and SRP/SCC descriptions** are distinct across splits, reducing near-duplicate leakage.
+- **Spatial separation:**  Anchor locations in train/test sets are **spatially separated**, so their local subgraphs (≤1000 nodes) have minimal or no overlap.
+- **Independent candidate pools:**  When local candidates are insufficient, additional candidates are sampled **only from the test set**, ensuring no training data is used.
+- **Mitigating overlap:**  While entity names may recur, the **spatial configurations, subgraphs, and SRP/SCC descriptions** are distinct across splits, reducing near-duplicate leakage.
 We will clarify this process in the appendix.
 
 **5. PIGEON/Geo-R.** We additionally evaluate on the IM2GPS3K benchmark (used by PIGEON/Geo-R) by converting coordinate predictions into our ranking setting.
