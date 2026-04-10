@@ -37,6 +37,7 @@ We thank the reviewer for insightful suggestions.
 |            | Baseline  | 27.15 | 19.97 |
 | 150        | UGE       | **40.08** | **28.07** |
 |            | Baseline  | 21.62 | 15.48 |
+
 - **Takeaway:**  
   While performance decreases as candidate size increases , **UGE consistently outperforms its backbone**, indicating that the gains persist in more realistic, larger search spaces.
 
@@ -73,17 +74,16 @@ These results indicate **stable performance across random initializations**.
   
 //Reviewer 4: udFw//
 
-**1. Generation.** We thank the reviewer for this suggestion.
+We thank the reviewer for the suggestions. 
 
+**1. Generation.** 
 - **Scope:**  Our work focuses on **multimodal embeddings** and **representation learning**, evaluated via **retrieval and ranking** tasks for aligning visual, textual, and spatial graph information.
 - **Future direction (generation):**
-  We view generation as a complementary extension, using UGE as a **spatially grounded embedding module** within a **SpatialRAG** pipeline:
+  We view generation as a complementary extension, using UGE as a **spatially grounded embedding module** within a **RAG** pipeline:
   (1) retrieve relevant urban locations or neighborhoods using UGE embeddings, and
   (2) condition a generative model to produce **spatial QA or navigation instructions** grounded in retrieved evidence.
-This setup can enhance **spatial faithfulness** and support real-world applications (e.g., travel assistance).
 
-**2.Efficiency concern.** 
-We agree that inference latency is important.
+**2.Efficiency concern.**  
 - **Scope:** This work focuses on **spatially grounded multimodal embeddings**, prioritizing **representation quality** (alignment of visual, textual, and graph information) over efficiency.
 - **Current design:** We apply **subgraph sampling** (≤1000 nodes), which can be further improved via **adaptive sampling**.
 - **Future optimization:**  
@@ -91,20 +91,20 @@ We agree that inference latency is important.
   (2) **Graph caching** for overlapping neighborhoods.
 We will discuss these optimizations and trade-offs in the Appendix.
 
-**3.joint training baseline.**
-We thank the reviewer for this important suggestion. Following this comment, we added a **joint training baseline (“Joint”)**, where Stage 1 (SRP/SCC) and Stage 2 (graph-conditioned) data are naively combined and trained simultaneously.
-**Ablation results (H@5 / N@5):**
-| Task                | Method        | NY | SG | BJ | PA |
-|---------------------|--------------|----|----|----|----|
-| Geolocation Ranking | **UGE**      | **58.85/47.94** | **64.23/54.65** | **71.92/63.38** | **65.77/52.88** |
-|                     | Stage1-only  | 50.38/34.76 | 55.77/43.70 | 53.08/42.26 | 53.85/39.66 |
-|                     | Joint        | 39.84/25.94 | 38.25/29.87 | 15.96/22.60 | 10.54/20.08 |
-|                     | Stage2-only  | 29.23/18.02 | 25.77/17.23 | 2.31/1.42   | 1.00/0.50   |
-| Image Retrieval     | **UGE**      | **58.86/43.24** | **71.10/52.22** | 57.43/40.44 | **57.22/41.50** |
-|                     | Stage1-only  | 58.71/42.07 | 69.95/53.14 | **60.14/43.00** | 56.43/42.16 |
-|                     | Joint        | 32.86/28.65 | 48.78/34.77 | 30.92/30.56 | 20.95/28.94 |
-|                     | Stage2-only  | 27.00/15.22 | 27.61/16.40 | 27.71/17.11 | 25.46/15.72 |
+**3. Joint training baseline.** 
 
-As shown above, Joint training consistently underperforms Stage1-only, and is substantially worse than the full two-stage UGE model (reported in the main paper). This indicates that the gains are **not simply due to increased data volume or diversity**. Instead, the results support the importance of the **progressive training strategy**
-We will clarify this comparison and emphasize the role of training curriculum more explicitly in the revision.
+Following this comment, we added a **joint training baseline (“Joint”)**, where Stage 1 (SRP/SCC) and Stage 2 (graph-conditioned) data are naively combined and trained simultaneously.
+**Ablation results (H@5 / N@5):**
+| Task                | Method        | NY | SG | BJ |
+|---------------------|--------------|----|----|----|
+| Geolocation Ranking | **UGE**      | **58.85/47.94** | **64.23/54.65** | **71.92/63.38** |
+|                     | Stage1-only  | 50.38/34.76 | 55.77/43.70 | 53.08/42.26 |
+|                     | Joint        | 39.84/25.94 | 38.25/29.87 | 15.96/22.60 |
+|                     | Stage2-only  | 29.23/18.02 | 25.77/17.23 | 2.31/1.42   |
+| Image Retrieval     | **UGE**      | **58.86/43.24** | **71.10/52.22** | 57.43/40.44 |
+|                     | Stage1-only  | 58.71/42.07 | 69.95/53.14 | **60.14/43.00** |
+|                     | Joint        | 32.86/28.65 | 48.78/34.77 | 30.92/30.56 |
+|                     | Stage2-only  | 27.00/15.22 | 27.61/16.40 | 27.71/17.11 |
+
+As shown above, Joint training underperforms Stage1-only and the full two-stage UGE, indicating gains are **not due to data volume** but the **progressive training strategy**. We will clarify this in the revision.
 
