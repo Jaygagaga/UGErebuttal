@@ -27,8 +27,7 @@ This design enables **progressive injection of spatial knowledge** into the embe
 We will clarify this process in the appendix.
 
 **5. Coordinates-based geolocation test.** We additionally evaluate on the IM2GPS3K benchmark (used by PIGEON/Geo-R) by converting coordinate predictions into our ranking setting.
-- **Protocol:**
-  We convert GPS coordinates into textual labels via reverse geocoding (Mapbox), and construct 20-candidate sets per query. This allows evaluation using both:
+- **Protocol:** We convert GPS coordinates into textual labels via reverse geocoding (Mapbox), and construct 20-candidate sets per query. This allows evaluation using both:
   - ranking metrics (Hit@K, NDCG@K), and
   - standard distance-based metrics (Acc@1km, 25km, 200km, 750km, 2500km).
 - **Results:**
@@ -36,8 +35,7 @@ We will clarify this process in the appendix.
   - **Ranking:** Hit@5 (0.354 → 0.599), NDCG@5 (0.221 → 0.428)
   - **Geolocation accuracy:** Acc@1km (0.132 → 0.350), Acc@25km (0.294 → 0.566), Acc@200km (0.507 → 0.763), Acc@2500km (0.616 → 0.837)
   - **Error reduction:** mean (3467.9 km → 1595.3 km), median (196.3 km → 8.4 km)
-- **Takeaway:**
-  The improvements are consistent across both **ranking quality** and **coordinate-level accuracy**, aligning with standard evaluation protocols used by coordinate-prediction methods.
+- **Takeaway:** The improvements are consistent across both **ranking quality** and **coordinate-level accuracy**, aligning with standard evaluation protocols used by coordinate-prediction methods.
 
 
 
@@ -53,10 +51,8 @@ We use *zero-shot* to indicate that **evaluation tasks are not explicitly seen d
 
 1.**Efficiency concern.** 
 We agree that inference latency is important.
-- **Scope:**  
-  This work focuses on **spatially grounded multimodal embeddings**, prioritizing **representation quality** (alignment of visual, textual, and graph information) over efficiency.
-- **Current design:**  
-  We apply **subgraph sampling** (≤1000 nodes), which can be further improved via **adaptive sampling**.
+- **Scope:** This work focuses on **spatially grounded multimodal embeddings**, prioritizing **representation quality** (alignment of visual, textual, and graph information) over efficiency.
+- **Current design:** We apply **subgraph sampling** (≤1000 nodes), which can be further improved via **adaptive sampling**.
 - **Future optimization:**  
   (1) **Offline graph precomputation** (retrieval + fusion at inference),  
   (2) **Graph caching** for overlapping neighborhoods.
@@ -83,8 +79,7 @@ We observe similar designs in prior work; for example, CityEval (CityGPT) has ~6
 
 **4. Error case.**  
 We include **error analysis** for distance-based queries.
-- **Example:**  
-  For a distance query, the model predicts a POI near the same road as the reference location, while the ground truth is slightly closer. This suggests reliance on **local proximity cues**, making **fine-grained distance comparison** difficult.
+- **Example:**  For a distance query, the model predicts a POI near the same road as the reference location, while the ground truth is slightly closer. This suggests reliance on **local proximity cues**, making **fine-grained distance comparison** difficult.
 - **Analysis:**  
   (1) **Weak metric grounding:** SRPs express distance/direction in language but are not explicitly aligned with graph-level metrics.  
   (2) **Objective limitation:** Contrastive learning captures semantic relations but struggles with **continuous distance values**.
@@ -97,8 +92,7 @@ We include **error analysis** for distance-based queries.
 
 **1. Generation.** We thank the reviewer for this suggestion.
 
-- **Scope:**  
-  Our work focuses on **multimodal embeddings** and **representation learning**, evaluated via **retrieval and ranking** tasks for aligning visual, textual, and spatial graph information.
+- **Scope:**  Our work focuses on **multimodal embeddings** and **representation learning**, evaluated via **retrieval and ranking** tasks for aligning visual, textual, and spatial graph information.
 - **Future direction (generation):**
   We view generation as a complementary extension, using UGE as a **spatially grounded embedding module** within a **SpatialRAG** pipeline:
   (1) retrieve relevant urban locations or neighborhoods using UGE embeddings, and
@@ -107,10 +101,8 @@ This setup can enhance **spatial faithfulness** and support real-world applicati
 
 **2.Efficiency concern.** 
 We agree that inference latency is important.
-- **Scope:**  
-  This work focuses on **spatially grounded multimodal embeddings**, prioritizing **representation quality** (alignment of visual, textual, and graph information) over efficiency.
-- **Current design:**  
-  We apply **subgraph sampling** (≤1000 nodes), which can be further improved via **adaptive sampling**.
+- **Scope:** This work focuses on **spatially grounded multimodal embeddings**, prioritizing **representation quality** (alignment of visual, textual, and graph information) over efficiency.
+- **Current design:** We apply **subgraph sampling** (≤1000 nodes), which can be further improved via **adaptive sampling**.
 - **Future optimization:**  
   (1) **Offline graph precomputation** (retrieval + fusion at inference),  
   (2) **Graph caching** for overlapping neighborhoods.
