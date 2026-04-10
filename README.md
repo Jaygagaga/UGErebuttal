@@ -6,7 +6,7 @@ We thank the reviewer for insightful suggestions.
 - we introduce a **new evaluation setting**, where models must jointly align **visual, textual, and structured spatial information**, making standard tasks **unexplored under graph-augmented inputs**.  
 - Our goal is not new tasks, but to test whether embeddings can **capture structured urban spatial knowledge**, via:  
   - **(i) spatial graphs**, and  
-  - **(ii) designed spatial signals (SRPs, SCCs)**, two of which are also data-level contribution.
+  - **(ii) designed spatial signals (SRPs, SCCs)**, which are also data-level contributions.
 
 **2. Failure cases.** We note that the variance between different models/LLMs appear to be stochastic rather than systematic effects. we also undertake an error case analysis on **Nearest POI task** in Beijing. In one example, the model predicts a POI along a nearby main road, while the ground truth is slightly closer on a parallel small pedestrian path. Although both are spatially close, the model favors the POI with stronger road connectivity, suggesting reliance on **coarse structural proximity cues**, which makes **fine-grained distance distinctions** more challenging.
 
