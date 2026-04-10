@@ -2,7 +2,7 @@
 
 We thank the reviewer for insightful suggestions.
 
-**1.Benchmark is insufficiently novel.** Our benchmark is, to the best of our knowledge, the **first to incorporate urban spatial graphs as a first-class input modality** for evaluating multimodal embedding models.  
+**1.Benchmark novelty.** Our benchmark is, to the best of our knowledge, the **first to incorporate urban spatial graphs as a first-class input modality** for evaluating multimodal embedding models.  
 - This introduces a **new evaluation setting**, where models must jointly align **visual, textual, and structured spatial information**, making standard tasks **unexplored under graph-augmented inputs**.  
 - The goal is not new tasks, but to test whether embeddings can **capture structured urban spatial knowledge**, via:  
   - **(i) spatial graphs**, and  
