@@ -81,8 +81,7 @@ Across 5 seeds, UGE achieves: **Hit@5: 0.6314 ± 0.0210**
 These results indicate **stable performance across different random initializations**, with relatively low variance compared to the overall performance gains.
 
 **3. Small test sets.**  
-Our benchmark covers **4 core tasks**, with perception and grounding expanded into **6 and 4 subtasks across 4 cities**, emphasizing **diversity and structured evaluation**. The test sets are **carefully curated** to ensure high quality and include **challenging samples**, rather than simply increasing scale.  
-We observe similar designs in prior work; for example, CityEval (CityGPT) has ~6,000 samples across 41 tasks, i.e., **~100–200 instances per task**.
+Our benchmark covers **4 core tasks**, with perception and grounding expanded into **6 and 4 subtasks across 4 cities**, emphasizing **diversity and structured evaluation**. The test sets are **carefully curated** to ensure high quality and include **challenging samples**, rather than simply increasing scale. We observe similar patterns in prior work. For example, **CityEval (CityGPT)** contains  100–300 samples per task per city, reflecting a similar trade-off between task diversity and per-task scale.
 
 **4. Error case.**  
 We include **error analysis** for distance-based queries.
