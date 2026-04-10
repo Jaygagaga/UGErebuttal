@@ -26,7 +26,7 @@ This design enables **progressive injection of spatial knowledge** into the embe
   While entity names may recur, the **spatial configurations, subgraphs, and SRP/SCC descriptions** are distinct across splits, reducing near-duplicate leakage.
 We will clarify this process in the appendix.
 
-**5. Coordinates-based geolocation test.** We additionally evaluate on the IM2GPS3K benchmark (used by PIGEON/Geo-R) by converting coordinate predictions into our ranking setting.
+**5. PIGEON/Geo-R.** We additionally evaluate on the IM2GPS3K benchmark (used by PIGEON/Geo-R) by converting coordinate predictions into our ranking setting.
 - **Protocol:** We convert GPS coordinates into textual labels via reverse geocoding (Mapbox), and construct 20-candidate sets per query. This allows evaluation using both:
   - ranking metrics (Hit@K, NDCG@K), and
   - standard distance-based metrics (Acc@1km, 25km, 200km, 750km, 2500km).
