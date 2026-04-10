@@ -31,7 +31,7 @@ We will clarify this process in the appendix.
   UGE significantly improves over its backbone (Qwen2.5-VL-7B):
   - **Ranking:** Hit@5 (0.354 → 0.599), NDCG@5 (0.221 → 0.428)
   - **Geolocation accuracy:** Acc@1km (0.132 → 0.350), Acc@25km (0.294 → 0.566), Acc@200km (0.507 → 0.763), Acc@2500km (0.616 → 0.837)
-  - **Error reduction:** mean (3467.9 km → 1595.3 km), median (196.3 km → 8.4 km)
+  - **Error reduction:** mean (3467.9 km → 1595.3 km)
 - **Takeaway:** The improvements are consistent across both **ranking quality** and **coordinate-level accuracy**, aligning with standard evaluation protocols used by coordinate-prediction methods.
 
 
