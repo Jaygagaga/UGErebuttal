@@ -6,23 +6,19 @@ We thank the reviewer for insightful suggestions.
 - we introduce a **new evaluation setting**, where models must jointly align **visual, textual, and structured spatial information**, making standard tasks **unexplored under graph-augmented inputs**.  
 - Our goal is not new tasks, but to test whether embeddings can **capture structured urban spatial knowledge**, via:  
   - **(i) spatial graphs**, and  
-  - **(ii) designed spatial signals (SRPs, SCCs)**.  
-- We also emphasize the **data-level contribution**, particularly in **Stage 1 (SRPs/SCCs)**, which injects spatial awareness via language-aligned reasoning cues.
+  - **(ii) designed spatial signals (SRPs, SCCs)**, two of which are also data-level contribution.
 
-**2. Failure cases.** We note that the variance between different models/LLMs appear to be stochastic rather than systematic effects. Nevertheless, we also undertake an error case analysis on **Nearest POI task** in Beijing. In one example, the model predicts a POI along a nearby main road, while the ground truth is slightly closer on a parallel small pedestrian path. Although both are spatially close, the model favors the POI with stronger road connectivity, suggesting reliance on **coarse structural proximity cues**, which makes **fine-grained distance distinctions** more challenging.
+**2. Failure cases.** We note that the variance between different models/LLMs appear to be stochastic rather than systematic effects. we also undertake an error case analysis on **Nearest POI task** in Beijing. In one example, the model predicts a POI along a nearby main road, while the ground truth is slightly closer on a parallel small pedestrian path. Although both are spatially close, the model favors the POI with stronger road connectivity, suggesting reliance on **coarse structural proximity cues**, which makes **fine-grained distance distinctions** more challenging.
 
-**3. CityLens.** CityLens focuses on urban socio-economic prediction from visual data, while our work targets **representation learning and evaluation** for aligning visual, textual, and spatial graph information. We will cite CityLens and clarify this distinction in the revision.
+**3. CityLens.** We will cite CityLens and clarify this distinction in the revision.
 
-**4. Data leakage.** We take several steps to avoid leakage between training (SRP/SCC) and evaluation:
+**4. Data leakage.** We did the followings to avoid data leakage:
 - **Spatial separation:**  Anchor locations in train/test sets are **spatially separated**, so their local subgraphs (≤1000 nodes) have minimal or no overlap.
-- **Independent candidate pools:**  When local candidates are insufficient, additional candidates are sampled **only from the test set**, ensuring no training data is used.
-- **Mitigating overlap:**  While entity names may recur, the **spatial configurations, subgraphs, and SRP/SCC descriptions** are distinct across splits, reducing near-duplicate leakage.
-We will clarify these details in the appendix.
+- **Mitigating overlap:**  While entity names may recur, the **spatial configurations, subgraphs, and SRP/SCC descriptions** make locations different, reducing near-duplicate leakage. We will clarify these details in the appendix.
 
-**5. PIGEON/Geo-R.** We additionally evaluate on the IM2GPS3K benchmark (used by PIGEON/Geo-R) by converting coordinate predictions into our ranking setting.
-- **Protocol:** We convert GPS coordinates into textual labels via reverse geocoding (Mapbox), and construct 20-candidate sets per query, allowing evaluation with ranking and distance-based metrics. 
-- **Results:**
-  UGE significantly improves over its backbone (Qwen2.5-VL-7B):
+**5. PIGEON/Geo-R.** We additionally evaluate on the IM2GPS3K benchmark by converting coordinate predictions into our ranking setting.
+- **Protocol:** We convert GPS coordinates into textual labels (Mapbox), and create 20 candidates per query. 
+- **Results:**UGE significantly improves over its backbone (Qwen2.5-VL-7B):
   - **Ranking:** Hit@5 (0.354 → 0.599), NDCG@5 (0.221 → 0.428)
   - **Geolocation accuracy:** Acc@1km (0.132 → 0.350), Acc@25km (0.294 → 0.566), Acc@200km (0.507 → 0.763), Acc@2500km (0.616 → 0.837)
   - **Error reduction:** mean (3467.9 km → 1595.3 km)
@@ -42,7 +38,7 @@ We will clarify these details in the appendix.
 | 150        | UGE       | **40.08** | **28.07** |
 |            | Baseline  | 21.62 | 15.48 |
 - **Takeaway:**  
-  While performance decreases as candidate size increases (expected), **UGE consistently outperforms its backbone**, indicating that the gains persist in more realistic, larger search spaces.
+  While performance decreases as candidate size increases , **UGE consistently outperforms its backbone**, indicating that the gains persist in more realistic, larger search spaces.
 
 
 **2. Zero-shot vs. transfer learning.**  
